@@ -145,6 +145,10 @@ function getSequelizeFromConfig(app, conf) {
     logging: isDev ? (function(m) { app.log.debug("[sql] %s", m); }) : (function(){})
   });
 
+  // Load custom config in 'sequelize options'.
+  var custom = app.get('sequelize options');
+  if (custom) extend(options, custom);
+
   var Sequelize = require('sequelize');
   return new Sequelize(conf.database, conf.username, conf.password, options);
 }
